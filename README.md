@@ -1,3 +1,8 @@
+Redux, MobX로 TODO List를 만들어봅니다.
+
+branch로 분리되어있습니다.
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
