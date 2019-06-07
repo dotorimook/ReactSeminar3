@@ -1,8 +1,10 @@
 import React, {useState, useCallback} from 'react';
+import {connect} from 'react-redux';
 import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
+import {actionCreator} from 'reducer';
 
 const Form = styled.form`
   display:flex;
@@ -29,7 +31,7 @@ const TodoInput = (props) => {
 
   const onSubmit = useCallback(e => {
     e.preventDefault();
-    props.onSubmit(item);
+    props.addItem(item);
     setItem('');
   },[item]);
 
@@ -52,4 +54,12 @@ const TodoInput = (props) => {
   )
 };
 
-export default TodoInput;
+const mapStateToProps = (props) => ({
+  todoList: props.list,
+});
+
+const mapDispatchToProps =(dispatch) => ({
+  addItem: (title) => (dispatch(actionCreator.addItem(title)))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoInput);

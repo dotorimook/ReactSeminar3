@@ -5,26 +5,16 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import TypoGraphy from '@material-ui/core/Typography';
 import {TodoInput, TodoList} from 'components';
-import Todo from 'models/Todo';
+import {connect} from 'react-redux';
+import {actionCreator} from 'reducer';
 
-export default class App extends Component {
+class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      data: [...Array(5)].map((el, idx) => new Todo(`할일 ${idx+1}`))
-    }
+    [...Array(5)].forEach((el, idx) => props.addItem(`할일 ${idx+1}`))
   }
 
-  onAddItem = (title) => {
-    const {data} = this.state;
-    data.push(new Todo(title));
-    this.setState({
-      data
-    });
-  }  
-
   render() {
-    const {data} = this.state;
     return (
       <div>
         <AppBar color="primary" position="static">
@@ -36,9 +26,19 @@ export default class App extends Component {
           </TypoGraphy>
           </Toolbar>
         </AppBar>
-        <TodoInput onSubmit = {this.onAddItem} />
-        <TodoList list={data}/>
+        <TodoInput />
+        <TodoList />
       </div>
     );
   }
 }
+
+const mapStateToProps = (props) => ({
+  todoList: props.list,
+});
+
+const mapDispatchToProps =(dispatch) => ({
+  addItem: (title) => (dispatch(actionCreator.addItem(title)))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
