@@ -1,4 +1,5 @@
 import React, {useState, useCallback} from 'react';
+import {inject, observer} from 'mobx-react';
 import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -29,7 +30,7 @@ const TodoInput = (props) => {
 
   const onSubmit = useCallback(e => {
     e.preventDefault();
-    props.onSubmit(item);
+    props.todoList.pushItem(item);
     setItem('');
   },[item]);
 
@@ -52,4 +53,4 @@ const TodoInput = (props) => {
   )
 };
 
-export default TodoInput;
+export default inject('todoList')(observer(TodoInput));
